@@ -11,7 +11,7 @@ API REST de reservas que expone reglas del proyecto respetando la separación **
 ```bash
 git clone https://github.com/justinjw93/UEES_UCOM0310_Semana8_Proyecto_BASE.git
 cd UEES_UCOM0310_Semana8_Proyecto_BASE
-mvn clean test          # 24 pruebas en verde
+mvn clean test          # 27 pruebas en verde
 mvn spring-boot:run     # API en http://localhost:8080
 bash scripts/demo.sh    # en otra terminal: recorrido completo de la API
 ```
@@ -70,8 +70,9 @@ repository/  Interfaz e implementación en memoria
 - `feature/integracion-api`: integración de la API REST.
 - `release/candidato-final`: versión candidata auditada.
 - `feature/entrega-final`: ajustes para la entrega final (Ae7).
+- `fix/creacion-atomica`: evita duplicados ante peticiones simultáneas.
 
-Versión final: etiqueta `v1.0.0`.
+Versión final: etiqueta `v1.0.1`.
 
 ## Limitaciones conocidas
 - Los datos se guardan en memoria y se pierden al reiniciar.

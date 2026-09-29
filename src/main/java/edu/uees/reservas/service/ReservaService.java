@@ -20,10 +20,11 @@ public class ReservaService {
     }
 
     public Reserva crear(String id, String tipo) {
-        if (repository.buscarPorId(id).isPresent()) {
+        Reserva reserva = new Reserva(id, tipo);
+        if (!repository.guardarSiNoExiste(reserva)) {
             throw new ReservaDuplicadaException(id);
         }
-        return repository.guardar(new Reserva(id, tipo));
+        return reserva;
     }
 
     public Reserva buscar(String id) {

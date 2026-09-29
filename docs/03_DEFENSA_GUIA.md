@@ -43,6 +43,7 @@ Cada capa depende solo de la siguiente. El Controller no conoce las reglas y el 
 | `IllegalArgumentException` genérica → respuesta `500`. | `ReservaNoEncontradaException` + manejador → `404`. | El error expresa el negocio y el cliente recibe una respuesta correcta. |
 | Número fijo `2` dentro de `puedeCancelar`. | Constante `HORAS_MINIMAS_CANCELACION`. | La regla tiene nombre y se cambia en un solo lugar; las pruebas la reutilizan. |
 | Un POST con id repetido sobrescribía la reserva. | `ReservaDuplicadaException` → `409 Conflict`. | Se evita la pérdida silenciosa de datos. |
+| "Buscar y luego guardar" en dos pasos: dos POST simultáneos podían crear la misma reserva. | `guardarSiNoExiste()` en una sola operación atómica (`putIfAbsent`). | El control de duplicados funciona también con peticiones concurrentes. |
 
 ## 4. Demostración funcional (3–4 min)
 
@@ -64,7 +65,7 @@ bash scripts/demo.sh
 
 ## 5. Pruebas y cobertura (2 min)
 
-- `mvn clean test` → **24 pruebas en verde**, en 3 niveles: dominio (6), Service (9) y Controller con MockMvc (9).
+- `mvn clean test` → **27 pruebas en verde**, en 4 niveles: dominio (6), repositorio (3, incluida una prueba de concurrencia), Service (9) y Controller con MockMvc (9).
 - JaCoCo: **100 % de ramas**, 96 % de líneas y 98 % de instrucciones. Lo único sin cubrir es el método `main` que arranca la aplicación.
 - **Interpretación:** el 100 % de ramas significa que se probaron todas las decisiones del código (sí/no), no que el sistema esté libre de errores. La cobertura mide qué se ejecutó, no si la regla es la correcta.
 
@@ -74,9 +75,9 @@ bash scripts/demo.sh
 git log --oneline --graph --decorate
 ```
 
-- Ramas: `feature/integracion-api` → `release/candidato-final` → `feature/entrega-final`, cada una integrada a `main` mediante un Pull Request (#1, #2, #3).
+- Ramas: `feature/integracion-api` → `release/candidato-final` → `feature/entrega-final` → `fix/creacion-atomica`, cada una integrada a `main` mediante un Pull Request (#1 a #4).
 - Commits con prefijos (`feat`, `test`, `fix`, `refactor`, `docs`, `release`) y un solo propósito cada uno.
-- Versión final etiquetada como `v1.0.0`.
+- Versión final etiquetada como `v1.0.1`.
 
 ## 7. Limitaciones y cierre (1–2 min)
 
@@ -97,7 +98,7 @@ git log --oneline --graph --decorate
 | ¿Qué patrón resolvió un problema concreto? | El manejador global de errores: convirtió un `500` engañoso en un `404` claro sin modificar el Controller. |
 | ¿Qué patrón evitaron y por qué? | Strategy/Factory para los tipos de reserva, porque hoy no tienen comportamiento distinto. |
 | ¿Qué refactorización redujo deuda técnica? | Reemplazar la excepción genérica por excepciones del negocio, y el número fijo por una constante con nombre. |
-| ¿Qué caso de prueba protege el mayor riesgo? | `crearConIdExistenteLanzaExcepcionYNoSobrescribe`: evita la pérdida silenciosa de una reserva. |
+| ¿Qué caso de prueba protege el mayor riesgo? | `creacionesSimultaneasConMismoIdSoloGuardanUna`: 20 hilos intentan crear la misma reserva a la vez y solo una se guarda; evita la pérdida silenciosa de datos. |
 | ¿Qué significa la cobertura obtenida? | Que todas las decisiones del código se ejecutaron en alguna prueba. No garantiza ausencia de errores; por eso también probamos límites y excepciones. |
-| ¿Qué evidencia Git demuestra la evolución? | El grafo de ramas y los PR #1–#3, donde cada hallazgo de la auditoría tiene su propio commit. |
+| ¿Qué evidencia Git demuestra la evolución? | El grafo de ramas y los PR #1–#4, donde cada hallazgo de la auditoría tiene su propio commit. |
 | ¿Qué mejorarían en una siguiente iteración? | Persistencia real, tipos válidos, endpoints de confirmar/cancelar y autenticación. |

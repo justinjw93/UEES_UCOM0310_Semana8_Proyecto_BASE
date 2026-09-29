@@ -5,5 +5,6 @@ import java.util.Optional;
 
 public interface ReservaRepository {
     Reserva guardar(Reserva reserva);
+    boolean guardarSiNoExiste(Reserva reserva);
     Optional<Reserva> buscarPorId(String id);
 }
