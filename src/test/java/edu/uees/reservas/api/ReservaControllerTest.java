@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -78,10 +77,10 @@ class ReservaControllerTest {
                 .andExpect(jsonPath("$.tipo").value("VIP"));
     }
 
-    // Comportamiento actual: la excepción del Service no se traduce a un código HTTP
-    // y el servidor termina respondiendo 500. Ver docs/04_EVIDENCIAS_Y_REFLEXION.md.
     @Test
-    void buscarReservaInexistentePropagaExcepcion() {
-        assertThrows(Exception.class, () -> mvc.perform(get("/api/reservas/NO-EXISTE")));
+    void buscarReservaInexistenteDevuelve404() throws Exception {
+        mvc.perform(get("/api/reservas/NO-EXISTE"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Reserva no encontrada: NO-EXISTE"));
     }
 }

@@ -64,7 +64,7 @@ class ReservaServiceTest {
     void buscarReservaInexistenteLanzaExcepcion() {
         when(repository.buscarPorId("NO-EXISTE")).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> service.buscar("NO-EXISTE"));
+        assertThrows(ReservaNoEncontradaException.class, () -> service.buscar("NO-EXISTE"));
     }
 
     @Test
