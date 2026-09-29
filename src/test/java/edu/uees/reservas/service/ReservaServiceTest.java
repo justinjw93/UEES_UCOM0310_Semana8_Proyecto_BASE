@@ -23,12 +23,12 @@ class ReservaServiceTest {
 
     @Test
     void dosHorasPermitenCancelar() {
-        assertTrue(service.puedeCancelar(2));
+        assertTrue(service.puedeCancelar(ReservaService.HORAS_MINIMAS_CANCELACION));
     }
 
     @Test
     void unaHoraNoPermiteCancelar() {
-        assertFalse(service.puedeCancelar(1));
+        assertFalse(service.puedeCancelar(ReservaService.HORAS_MINIMAS_CANCELACION - 1));
     }
 
     @Test

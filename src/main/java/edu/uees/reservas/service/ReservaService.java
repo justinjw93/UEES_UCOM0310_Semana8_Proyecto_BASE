@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservaService {
 
+    static final int HORAS_MINIMAS_CANCELACION = 2;
+
     private final ReservaRepository repository;
 
     public ReservaService(ReservaRepository repository) {
@@ -14,7 +16,7 @@ public class ReservaService {
     }
 
     public boolean puedeCancelar(int horasAnticipacion) {
-        return horasAnticipacion >= 2;
+        return horasAnticipacion >= HORAS_MINIMAS_CANCELACION;
     }
 
     public Reserva crear(String id, String tipo) {
