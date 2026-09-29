@@ -78,6 +78,17 @@ class ReservaControllerTest {
     }
 
     @Test
+    void crearReservaDuplicadaDevuelve409() throws Exception {
+        String cuerpo = "{\"id\":\"R-300\",\"tipo\":\"NORMAL\"}";
+        mvc.perform(post("/api/reservas").contentType(MediaType.APPLICATION_JSON).content(cuerpo))
+                .andExpect(status().isCreated());
+
+        mvc.perform(post("/api/reservas").contentType(MediaType.APPLICATION_JSON).content(cuerpo))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.detail").value("Ya existe una reserva con id: R-300"));
+    }
+
+    @Test
     void buscarReservaInexistenteDevuelve404() throws Exception {
         mvc.perform(get("/api/reservas/NO-EXISTE"))
                 .andExpect(status().isNotFound())

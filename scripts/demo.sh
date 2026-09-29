@@ -10,5 +10,6 @@ paso curl -s -w " [HTTP %{http_code}]" "$URL/puede-cancelar?horas=1"
 paso curl -s -w " [HTTP %{http_code}]" "$URL/puede-cancelar?horas=-3"
 paso curl -s -w " [HTTP %{http_code}]" -X POST "$URL" -H "Content-Type: application/json" -d '{"id":"R-001","tipo":"NORMAL"}'
 paso curl -s -w " [HTTP %{http_code}]" -X POST "$URL" -H "Content-Type: application/json" -d '{"id":"","tipo":"NORMAL"}'
+paso curl -s -w " [HTTP %{http_code}]" -X POST "$URL" -H "Content-Type: application/json" -d '{"id":"R-001","tipo":"VIP"}'
 paso curl -s -w " [HTTP %{http_code}]" "$URL/R-001"
 paso curl -s -w " [HTTP %{http_code}]" "$URL/NO-EXISTE"
