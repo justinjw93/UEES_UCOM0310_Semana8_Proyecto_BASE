@@ -98,6 +98,8 @@ El Service lanza `IllegalArgumentException("Reserva no encontrada")`, pero nadie
 
 Así el Controller sigue siendo delgado y el manejo de errores queda en un solo lugar.
 
+> **Actualización (Actividad 3):** esta mejora ya se aplicó en la rama `release/candidato-final`. Ahora un id inexistente responde `404`. Ver `05_AUDITORIA_CALIDAD_TRAZABILIDAD.md`.
+
 ## 7. Reflexión sobre la separación de responsabilidades
 
 Separar el sistema en Controller, Service y Domain hizo que cada parte tenga un solo motivo para cambiar:
@@ -113,6 +115,6 @@ El reto mostró el punto débil actual: los errores del negocio todavía no tien
 ## Limitaciones
 
 1. Los datos se guardan en memoria y se pierden al reiniciar.
-2. Un id inexistente responde `500` en lugar de `404`.
+2. Un id inexistente responde `500` en lugar de `404` (resuelto en la Actividad 3).
 3. El campo `tipo` acepta cualquier texto; no hay una lista de tipos válidos.
 4. Confirmar o cancelar una reserva todavía no está disponible por la API.

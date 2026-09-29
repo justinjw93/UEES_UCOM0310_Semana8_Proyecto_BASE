@@ -25,7 +25,7 @@ mvn spring-boot:run
 | GET | `/api/reservas/salud` | Estado de la API |
 | GET | `/api/reservas/puede-cancelar?horas=2` | Indica si se puede cancelar (mínimo 2 horas) |
 | POST | `/api/reservas` | Crea una reserva: `{"id":"R-001","tipo":"NORMAL"}` |
-| GET | `/api/reservas/{id}` | Consulta una reserva por id |
+| GET | `/api/reservas/{id}` | Consulta una reserva por id (`404` si no existe) |
 
 ## Ejemplos
 ```bash
@@ -34,10 +34,17 @@ curl -X POST http://localhost:8080/api/reservas -H "Content-Type: application/js
 curl http://localhost:8080/api/reservas/R-001
 ```
 
+## Demostración repetible
+Con la aplicación en ejecución:
+```bash
+bash scripts/demo.sh
+```
+Ejecuta las llamadas principales y muestra el código HTTP de cada una. Salida de referencia: `docs/evidencias/demo-salida.txt`.
+
 ## Estructura
 ```
-api/         Controller y DTO (CrearReservaRequest)
-service/     Reglas de negocio (ReservaService)
+api/         Controller, DTO (CrearReservaRequest) y manejo de errores
+service/     Reglas de negocio (ReservaService) y excepciones
 domain/      Reserva y EstadoReserva
 repository/  Interfaz e implementación en memoria
 ```
@@ -47,3 +54,9 @@ repository/  Interfaz e implementación en memoria
 - [Auditoría final](docs/02_AUDITORIA_FINAL_PLANTILLA.md)
 - [Guía de defensa](docs/03_DEFENSA_GUIA.md)
 - [Evidencias y reflexión](docs/04_EVIDENCIAS_Y_REFLEXION.md)
+- [Auditoría de calidad y trazabilidad](docs/05_AUDITORIA_CALIDAD_TRAZABILIDAD.md)
+
+## Ramas
+- `main`: proyecto base.
+- `feature/integracion-api`: integración de la API REST.
+- `release/candidato-final`: versión candidata auditada.

@@ -10,14 +10,16 @@
 - [x] Dominio coherente: `Reserva` valida su id y controla su estado.
 
 ## Pruebas
-- [x] mvn clean test exitoso (13 pruebas en verde)
-- [x] JaCoCo revisado (83 % instrucciones, 78 % líneas)
+- [x] mvn clean test exitoso (22 pruebas en verde)
+- [x] JaCoCo revisado (100 % ramas, 95,9 % líneas)
 
 ## Git
-- [x] Rama final: `feature/integracion-api`
+- [x] Rama final: `release/candidato-final`
 - [x] Commits descriptivos
 - [x] Pull Request documentado
 
 ## Limitaciones
-1. Un id inexistente responde `500` en lugar de `404`; la mejora está descrita en `04_EVIDENCIAS_Y_REFLEXION.md`.
+1. Crear una reserva con un id repetido reemplaza la anterior sin avisar.
 2. Los datos se guardan en memoria y se pierden al reiniciar la aplicación.
+
+Detalle completo en `05_AUDITORIA_CALIDAD_TRAZABILIDAD.md`.
