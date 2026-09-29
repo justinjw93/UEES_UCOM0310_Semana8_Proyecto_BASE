@@ -32,6 +32,16 @@ class ReservaServiceTest {
     }
 
     @Test
+    void ceroHorasNoPermiteCancelar() {
+        assertFalse(service.puedeCancelar(0));
+    }
+
+    @Test
+    void masDeDosHorasPermitenCancelar() {
+        assertTrue(service.puedeCancelar(3));
+    }
+
+    @Test
     void crearGuardaReservaPendiente() {
         when(repository.guardar(any(Reserva.class))).thenAnswer(inv -> inv.getArgument(0));
 
@@ -55,5 +65,14 @@ class ReservaServiceTest {
         when(repository.buscarPorId("NO-EXISTE")).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> service.buscar("NO-EXISTE"));
+    }
+
+    @Test
+    void confirmarCambiaEstadoYGuarda() {
+        Reserva existente = new Reserva("R-001", "NORMAL");
+        when(repository.buscarPorId("R-001")).thenReturn(Optional.of(existente));
+        when(repository.guardar(existente)).thenReturn(existente);
+
+        assertEquals(EstadoReserva.CONFIRMADA, service.confirmar("R-001").getEstado());
     }
 }
