@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ReservaServiceTest {
@@ -23,12 +25,12 @@ class ReservaServiceTest {
 
     @Test
     void dosHorasPermitenCancelar() {
-        assertTrue(service.puedeCancelar(2));
+        assertTrue(service.puedeCancelar(ReservaService.HORAS_MINIMAS_CANCELACION));
     }
 
     @Test
     void unaHoraNoPermiteCancelar() {
-        assertFalse(service.puedeCancelar(1));
+        assertFalse(service.puedeCancelar(ReservaService.HORAS_MINIMAS_CANCELACION - 1));
     }
 
     @Test
@@ -50,6 +52,14 @@ class ReservaServiceTest {
         assertEquals("R-001", reserva.getId());
         assertEquals("NORMAL", reserva.getTipo());
         assertEquals(EstadoReserva.PENDIENTE, reserva.getEstado());
+    }
+
+    @Test
+    void crearConIdExistenteLanzaExcepcionYNoSobrescribe() {
+        when(repository.buscarPorId("R-001")).thenReturn(Optional.of(new Reserva("R-001", "NORMAL")));
+
+        assertThrows(ReservaDuplicadaException.class, () -> service.crear("R-001", "VIP"));
+        verify(repository, never()).guardar(any(Reserva.class));
     }
 
     @Test

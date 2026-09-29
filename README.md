@@ -1,4 +1,4 @@
-# UEES UCOM0310 — Semana 8 — Laboratorio de integración Spring Boot
+# UEES UCOM0310 — Semana 8 — Proyecto final: API de reservas
 
 API REST de reservas que expone reglas del proyecto respetando la separación **Controller → Service → Domain**.
 
@@ -7,11 +7,20 @@ API REST de reservas que expone reglas del proyecto respetando la separación **
 - Maven
 - Git
 
+## Inicio rápido (desde cero)
+```bash
+git clone https://github.com/justinjw93/UEES_UCOM0310_Semana8_Proyecto_BASE.git
+cd UEES_UCOM0310_Semana8_Proyecto_BASE
+mvn clean test          # 24 pruebas en verde
+mvn spring-boot:run     # API en http://localhost:8080
+bash scripts/demo.sh    # en otra terminal: recorrido completo de la API
+```
+
 ## Ejecutar pruebas
 ```bash
 mvn clean test
 ```
-Reporte de cobertura: `target/site/jacoco/index.html`
+Reporte de cobertura: `target/site/jacoco/index.html` (100 % de ramas; captura en `docs/evidencias/jacoco-reporte.png`)
 
 ## Ejecutar aplicación
 ```bash
@@ -24,7 +33,7 @@ mvn spring-boot:run
 |---|---|---|
 | GET | `/api/reservas/salud` | Estado de la API |
 | GET | `/api/reservas/puede-cancelar?horas=2` | Indica si se puede cancelar (mínimo 2 horas) |
-| POST | `/api/reservas` | Crea una reserva: `{"id":"R-001","tipo":"NORMAL"}` |
+| POST | `/api/reservas` | Crea una reserva: `{"id":"R-001","tipo":"NORMAL"}` (`409` si el id ya existe) |
 | GET | `/api/reservas/{id}` | Consulta una reserva por id (`404` si no existe) |
 
 ## Ejemplos
@@ -60,3 +69,12 @@ repository/  Interfaz e implementación en memoria
 - `main`: proyecto base.
 - `feature/integracion-api`: integración de la API REST.
 - `release/candidato-final`: versión candidata auditada.
+- `feature/entrega-final`: ajustes para la entrega final (Ae7).
+
+Versión final: etiqueta `v1.0.0`.
+
+## Limitaciones conocidas
+- Los datos se guardan en memoria y se pierden al reiniciar.
+- El campo `tipo` acepta cualquier texto.
+- Confirmar y cancelar no están expuestos como endpoints.
+- No hay autenticación.

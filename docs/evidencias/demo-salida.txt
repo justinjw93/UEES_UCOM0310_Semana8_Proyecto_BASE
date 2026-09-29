@@ -9,13 +9,16 @@ $ curl -s -w  [HTTP %{http_code}] http://localhost:8080/api/reservas/puede-cance
 false [HTTP 200]
 
 $ curl -s -w  [HTTP %{http_code}] http://localhost:8080/api/reservas/puede-cancelar?horas=-3
-{"timestamp":"2026-09-29T04:27:06.787+00:00","status":400,"error":"Bad Request","path":"/api/reservas/puede-cancelar"} [HTTP 400]
+{"timestamp":"2026-09-29T04:40:56.821+00:00","status":400,"error":"Bad Request","path":"/api/reservas/puede-cancelar"} [HTTP 400]
 
 $ curl -s -w  [HTTP %{http_code}] -X POST http://localhost:8080/api/reservas -H Content-Type: application/json -d {"id":"R-001","tipo":"NORMAL"}
 {"id":"R-001","tipo":"NORMAL","estado":"PENDIENTE"} [HTTP 201]
 
 $ curl -s -w  [HTTP %{http_code}] -X POST http://localhost:8080/api/reservas -H Content-Type: application/json -d {"id":"","tipo":"NORMAL"}
-{"timestamp":"2026-09-29T04:27:06.915+00:00","status":400,"error":"Bad Request","path":"/api/reservas"} [HTTP 400]
+{"timestamp":"2026-09-29T04:40:56.950+00:00","status":400,"error":"Bad Request","path":"/api/reservas"} [HTTP 400]
+
+$ curl -s -w  [HTTP %{http_code}] -X POST http://localhost:8080/api/reservas -H Content-Type: application/json -d {"id":"R-001","tipo":"VIP"}
+{"type":"about:blank","title":"Conflict","status":409,"detail":"Ya existe una reserva con id: R-001","instance":"/api/reservas"} [HTTP 409]
 
 $ curl -s -w  [HTTP %{http_code}] http://localhost:8080/api/reservas/R-001
 {"id":"R-001","tipo":"NORMAL","estado":"PENDIENTE"} [HTTP 200]

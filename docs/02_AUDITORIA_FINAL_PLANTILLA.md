@@ -10,16 +10,16 @@
 - [x] Dominio coherente: `Reserva` valida su id y controla su estado.
 
 ## Pruebas
-- [x] mvn clean test exitoso (22 pruebas en verde)
-- [x] JaCoCo revisado (100 % ramas, 95,9 % líneas)
+- [x] mvn clean test exitoso (24 pruebas en verde)
+- [x] JaCoCo revisado (100 % ramas, 96,3 % líneas)
 
 ## Git
-- [x] Rama final: `release/candidato-final`
+- [x] Rama final: `main` con etiqueta `v1.0.0` (integra `feature/integracion-api`, `release/candidato-final` y `feature/entrega-final`)
 - [x] Commits descriptivos
 - [x] Pull Request documentado
 
 ## Limitaciones
-1. Crear una reserva con un id repetido reemplaza la anterior sin avisar.
-2. Los datos se guardan en memoria y se pierden al reiniciar la aplicación.
+1. Los datos se guardan en memoria y se pierden al reiniciar la aplicación.
+2. El campo `tipo` acepta cualquier texto y no hay autenticación.
 
 Detalle completo en `05_AUDITORIA_CALIDAD_TRAZABILIDAD.md`.

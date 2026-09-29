@@ -123,7 +123,7 @@ La auditoría fue útil porque los números de JaCoCo señalaron reglas del domi
 
 ## 7. Limitaciones
 
-1. **Reservas duplicadas:** crear una reserva con un id que ya existe reemplaza la anterior sin avisar. Mejora sugerida: responder `409 Conflict`.
+1. **Reservas duplicadas:** crear una reserva con un id que ya existe reemplazaba la anterior sin avisar. *Resuelto en la entrega final (Ae7): ahora responde `409 Conflict`.*
 2. **Datos en memoria:** se pierden al reiniciar la aplicación.
 3. **Tipo libre:** el campo `tipo` acepta cualquier texto; no existe una lista de tipos válidos.
 4. **Operaciones incompletas en la API:** confirmar y cancelar existen en el sistema, pero aún no se ofrecen como endpoints.
