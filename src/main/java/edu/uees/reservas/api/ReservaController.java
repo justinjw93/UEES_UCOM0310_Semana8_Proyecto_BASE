@@ -3,6 +3,7 @@ package edu.uees.reservas.api;
 import edu.uees.reservas.domain.Reserva;
 import edu.uees.reservas.service.ReservaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class ReservaController {
     }
 
     @GetMapping("/puede-cancelar")
-    public ResponseEntity<Boolean> puedeCancelar(@RequestParam int horas) {
+    public ResponseEntity<Boolean> puedeCancelar(
+            @RequestParam @PositiveOrZero int horas) {
         return ResponseEntity.ok(service.puedeCancelar(horas));
     }
 
