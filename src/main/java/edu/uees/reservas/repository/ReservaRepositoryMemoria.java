@@ -19,6 +19,11 @@ public class ReservaRepositoryMemoria implements ReservaRepository {
     }
 
     @Override
+    public boolean guardarSiNoExiste(Reserva reserva) {
+        return datos.putIfAbsent(reserva.getId(), reserva) == null;
+    }
+
+    @Override
     public Optional<Reserva> buscarPorId(String id) {
         return Optional.ofNullable(datos.get(id));
     }

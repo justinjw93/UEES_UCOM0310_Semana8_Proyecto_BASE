@@ -10,11 +10,11 @@
 - [x] Dominio coherente: `Reserva` valida su id y controla su estado.
 
 ## Pruebas
-- [x] mvn clean test exitoso (24 pruebas en verde)
-- [x] JaCoCo revisado (100 % ramas, 96,3 % líneas)
+- [x] mvn clean test exitoso (27 pruebas en verde)
+- [x] JaCoCo revisado (100 % ramas, 96,4 % líneas)
 
 ## Git
-- [x] Rama final: `main` con etiqueta `v1.0.0` (integra `feature/integracion-api`, `release/candidato-final` y `feature/entrega-final`)
+- [x] Rama final: `main` con etiqueta `v1.0.1` (integra `feature/integracion-api`, `release/candidato-final`, `feature/entrega-final` y `fix/creacion-atomica`)
 - [x] Commits descriptivos
 - [x] Pull Request documentado
 

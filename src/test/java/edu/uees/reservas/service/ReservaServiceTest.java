@@ -45,7 +45,7 @@ class ReservaServiceTest {
 
     @Test
     void crearGuardaReservaPendiente() {
-        when(repository.guardar(any(Reserva.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(repository.guardarSiNoExiste(any(Reserva.class))).thenReturn(true);
 
         Reserva reserva = service.crear("R-001", "NORMAL");
 
@@ -56,7 +56,7 @@ class ReservaServiceTest {
 
     @Test
     void crearConIdExistenteLanzaExcepcionYNoSobrescribe() {
-        when(repository.buscarPorId("R-001")).thenReturn(Optional.of(new Reserva("R-001", "NORMAL")));
+        when(repository.guardarSiNoExiste(any(Reserva.class))).thenReturn(false);
 
         assertThrows(ReservaDuplicadaException.class, () -> service.crear("R-001", "VIP"));
         verify(repository, never()).guardar(any(Reserva.class));
